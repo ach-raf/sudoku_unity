@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 		playerControls.Enable();
 		playerControls.Player.Fire.performed += LeftClicked;
 		playerControls.Player.Position.performed += CursorMoved;
+		playerControls.Player.Jump.performed += Solve;
 	}
 
 	private void OnDisable()
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
 		playerControls.Disable();
 		playerControls.Player.Fire.performed -= LeftClicked;
 		playerControls.Player.Position.performed -= CursorMoved;
+		playerControls.Player.Jump.performed -= Solve;
 	}
 
 
@@ -42,8 +44,14 @@ public class PlayerController : MonoBehaviour
 
 			ClickedObject2D()?.click();
 		}
+	}
 
-
+	private void Solve(InputAction.CallbackContext context)
+	{
+		if (context.performed)
+		{
+			EventManager.OnSolve();
+		}
 	}
 
 	public void CursorMoved(InputAction.CallbackContext context)

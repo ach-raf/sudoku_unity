@@ -8,6 +8,7 @@ public class SudokuLogic
 	private System.Random random = new System.Random();
 
 	private GridData gridData;
+	int _backtrackingLimit = 0;
 
 
 	public SudokuLogic()
@@ -312,6 +313,7 @@ public class SudokuLogic
 	}
 	public bool Solve()
 	{
+		_backtrackingLimit++;
 		/*
         '''Solves the Sudoku board via the backtracking algorithm'''
         */
@@ -333,7 +335,11 @@ public class SudokuLogic
 				cellData.SetValue(_value);
 				_choises.Remove(_value);
 				cellComponenet.SetCellData(cellData);
-				cellComponenet.SetColor(Color.white);
+				//cellComponenet.SetColor(Color.white);
+				if (_backtrackingLimit > 2000)
+				{
+					return false;
+				}
 				//backtracking here, leave the cell emptyGridObject empty for now if solve is false. 
 				if (Solve())
 				{
@@ -341,7 +347,7 @@ public class SudokuLogic
 				}
 				cellData.SetValue(0);
 				cellComponenet.SetCellData(cellData);
-				cellComponenet.SetColor(Color.white);
+				//cellComponenet.SetColor(Color.white);
 
 			}
 			_choises.Remove(_value);

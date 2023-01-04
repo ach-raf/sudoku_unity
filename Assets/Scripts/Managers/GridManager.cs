@@ -41,6 +41,7 @@ public class GridManager : MonoBehaviour
 				cellData = new CellData(position, 0, true, Color.white, cellIndex);
 				cellData.x = x;
 				cellData.y = y;
+				cellData.color = SelectColor(cellData);
 				cell = Instantiate(cellPrefab, cellData.position, Quaternion.identity);
 				cellComponenet = cell.GetComponent<CellComponenet>();
 				cellComponenet.SetCellData(cellData);
@@ -52,5 +53,73 @@ public class GridManager : MonoBehaviour
 		}
 		EventManager.OngridDataChanged(gridData);
 
+	}
+
+	public Color SelectColor(CellData _startingCell)
+	{
+		int y = _startingCell.y;
+		int x = _startingCell.x;
+		//ColorUtility.TryParseHtmlString("#bde0fe", out Color mainColor);
+		//ColorUtility.TryParseHtmlString("#a2d2ff", out Color secondaryColor);
+		Color mainColor = Color.red;
+		Color secondaryColor = Color.black;
+		Color color = Color.white;
+		switch (y)
+		{
+			case < 3:
+				switch (x)
+				{
+					case < 3:
+						//array 0
+						color = mainColor;
+						break;
+					case < 6:
+						//array 1
+						color = secondaryColor;
+						break;
+					default:
+						//array 2
+						color = mainColor;
+						break;
+				}
+				break;
+			case < 6:
+
+				switch (x)
+				{
+					case < 3:
+						//array 0
+						color = secondaryColor;
+						break;
+					case < 6:
+						//array 1
+						color = mainColor;
+						break;
+					default:
+						//array 2
+						color = secondaryColor;
+						break;
+				}
+				break;
+			case < 9:
+
+				switch (x)
+				{
+					case < 3:
+						//array 0
+						color = mainColor;
+						break;
+					case < 6:
+						//array 1
+						color = secondaryColor;
+						break;
+					default:
+						//array 2
+						color = mainColor;
+						break;
+				}
+				break;
+		}
+		return color;
 	}
 }

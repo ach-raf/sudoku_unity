@@ -11,16 +11,19 @@ public class GameManager : MonoBehaviour
 	private void Awake()
 	{
 		sudokuLogic = new SudokuLogic();
+		EventManager.OnSudokuLogicChanged(sudokuLogic);
 	}
 
 	private void OnEnable()
 	{
 		EventManager.gridDataChanged += OnGridDataChanged;
+		EventManager.solve += Solve;
 	}
 
 	private void OnDisable()
 	{
 		EventManager.gridDataChanged -= OnGridDataChanged;
+		EventManager.solve -= Solve;
 	}
 
 
@@ -37,10 +40,7 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			sudokuLogic.Solve();
-		}
+
 	}
 
 	public void DebugLogic()
@@ -62,5 +62,10 @@ public class GameManager : MonoBehaviour
 
 		bool localArrayLogic = sudokuLogic.LocalArrayLogic(startingCell, 99);
 		Debug.Log("localArrayLogic: " + localArrayLogic);
+	}
+
+	public void Solve()
+	{
+		sudokuLogic.Solve();
 	}
 }

@@ -8,6 +8,8 @@ public class CellComponenet : MonoBehaviour, IClickable
 
 	private TextMeshPro text;
 	private CellData cellData;
+
+	private SudokuLogic sudokuLogic;
 	private void Awake()
 	{
 		text = GetComponentInChildren<TextMeshPro>();
@@ -15,11 +17,12 @@ public class CellComponenet : MonoBehaviour, IClickable
 
 	private void OnEnable()
 	{
+		EventManager.sudokuLogicChanged += OnSudokuLogicChanged;
 	}
 
 	private void OnDisable()
 	{
-
+		EventManager.sudokuLogicChanged -= OnSudokuLogicChanged;
 	}
 
 	// Start is called before the first frame update
@@ -37,18 +40,25 @@ public class CellComponenet : MonoBehaviour, IClickable
 	public void click()
 	{
 		Debug.Log("Debug: Clicked");
-		if (cellData.modifiable)
+		if (cellData != null)
 		{
 			RandomColor();
 			IncrementCell();
 		}
 
+		if (sudokuLogic != null)
+		{
+			RandomColor();
+			IncrementCell();
+			sudokuLogic.LocalArrayLogic(cellData, 4);
+		}
 
 	}
 
 	public void RandomColor()
 	{
-		GetComponent<SpriteRenderer>().color = new Color(Random.value, Random.value, Random.value);
+		cellData.color = new Color(Random.value, Random.value, Random.value);
+		OnCellDataChanged();
 	}
 
 	public void OnCellDataChanged()
@@ -69,16 +79,23 @@ public class CellComponenet : MonoBehaviour, IClickable
 
 	public void IncrementCell()
 	{
+		cellData.SetValue(cellData.GetValue() + 1);
 		if (cellData.GetValue() > 9)
 		{
 			cellData.SetValue(1);
 		}
-		cellData.SetValue(cellData.GetValue() + 1);
+		cellData.modifiable = false;
+		OnCellDataChanged();
 	}
 
 	public void SetColor(Color color)
 	{
 		GetComponent<SpriteRenderer>().color = color;
+	}
+
+	public void OnSudokuLogicChanged(SudokuLogic sudokuLogic)
+	{
+		this.sudokuLogic = sudokuLogic;
 	}
 
 
