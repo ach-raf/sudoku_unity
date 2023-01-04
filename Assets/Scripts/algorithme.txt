@@ -35,10 +35,10 @@ iteration26: i = 2, j = 8, n = 28
 
 
 northNeighbor :: Int -> Int
-northNeighbor n = n - 9
+northNeighbor n = n - 10
 
 southNeighbor :: Int -> Int
-southNeighbor n = n + 9
+southNeighbor n = n + 10
 
 westNeighbor :: Int -> Int
 westNeighbor n = n - 1

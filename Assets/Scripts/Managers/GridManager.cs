@@ -27,10 +27,11 @@ public class GridManager : MonoBehaviour
 	void CreateGrid()
 	{
 
-		int listIndex = 0;
 		int cellIndex = 0;
 		CellData cellData;
 		Vector2 position;
+		GameObject cell;
+		CellComponenet cellComponenet;
 		for (int y = 0; y < width; y++)
 		{
 			for (int x = 0; x < height; x++)
@@ -40,14 +41,13 @@ public class GridManager : MonoBehaviour
 				cellData = new CellData(position, cellIndex, false, Color.white, cellIndex);
 				cellData.x = x;
 				cellData.y = y;
-				GameObject cell = Instantiate(cellPrefab, cellData.position, Quaternion.identity);
-				CellComponenet cellComponenet = cell.GetComponent<CellComponenet>();
+				cell = Instantiate(cellPrefab, cellData.position, Quaternion.identity);
+				cellComponenet = cell.GetComponent<CellComponenet>();
 				cellComponenet.SetCellData(cellData);
 				cell.transform.SetParent(parent.transform);
 				cell.name = "Cell_" + x + "_" + y;
 				gridData.AddIndex(cellIndex);
 				gridData.AddPair(cellIndex, cell);
-				listIndex++;
 			}
 		}
 		EventManager.OngridDataChanged(gridData);

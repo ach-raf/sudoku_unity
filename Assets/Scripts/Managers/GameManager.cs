@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 
-		CellData startingCell = gridData.GetCellDataFromGameObject(gridData.CellDictionary[3]);
+		CellData startingCell = gridData.GetCellDataFromGameObject(gridData.CellDictionary[88]);
 
 		Debug.Log("startingCell: " + startingCell.GetValue());
 		bool northLogic = sudokuLogic.NorthLogic(startingCell, 4);
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 		bool westLogic = sudokuLogic.WestLogic(startingCell, 4);
 		Debug.Log("westLogic: " + westLogic);
 
-		bool localArrayLogic = sudokuLogic.LocalArrayLogic(startingCell, 4);
+		bool localArrayLogic = sudokuLogic.LocalArrayLogic(startingCell, 99);
 		Debug.Log("localArrayLogic: " + localArrayLogic);
 	}
 

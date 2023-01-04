@@ -29,6 +29,17 @@ public class GridData
 		cellDictionary.Add(index, cell);
 		EventManager.OngridDataChanged(this);
 	}
+
+	public void RemovePair(int index)
+	{
+		cellDictionary.Remove(index);
+		EventManager.OngridDataChanged(this);
+	}
+
+	public GameObject GetCell(int index)
+	{
+		return cellDictionary[index];
+	}
 	public HashSet<int> IndexSet
 	{
 		get

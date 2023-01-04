@@ -190,78 +190,79 @@ public class SudokuLogic
 
 	public bool LocalArrayLogic(CellData _startingCell, int _value)
 	{
-		int _x = _startingCell.x;
-		int _z = _startingCell.y;
+		int y = _startingCell.y;
+		int x = _startingCell.x;
+		int yLoopStart = 0;
+		int yLoopEnd = 0;
 		int xLoopStart = 0;
 		int xLoopEnd = 0;
-		int zLoopStart = 0;
-		int zLoopEnd = 0;
 
-		switch (_x)
+
+		switch (y)
 		{
 			case < 3:
-				xLoopStart = 0;
-				xLoopEnd = 3;
-				switch (_z)
+				yLoopStart = 0;
+				yLoopEnd = 3;
+				switch (x)
 				{
 					case < 3:
 						//array 0
-						zLoopStart = 0;
-						zLoopEnd = 3;
+						xLoopStart = 0;
+						xLoopEnd = 3;
 						break;
 					case < 6:
 						//array 1
-						zLoopStart = 3;
-						zLoopEnd = 6;
+						xLoopStart = 3;
+						xLoopEnd = 6;
 						break;
 					default:
 						//array 2
-						zLoopStart = 6;
-						zLoopEnd = 9;
+						xLoopStart = 6;
+						xLoopEnd = 9;
 						break;
 				}
 				break;
 			case < 6:
-				xLoopStart = 3;
-				xLoopEnd = 6;
-				switch (_z)
+				yLoopStart = 3;
+				yLoopEnd = 6;
+				switch (x)
 				{
 					case < 3:
-						//array 4
-						zLoopStart = 0;
-						zLoopEnd = 3;
+						//array 0
+						xLoopStart = 0;
+						xLoopEnd = 3;
 						break;
 					case < 6:
-						//array 5
-						zLoopStart = 3;
-						zLoopEnd = 6;
+						//array 1
+						xLoopStart = 3;
+						xLoopEnd = 6;
 						break;
 					default:
-						//array 6
-						zLoopStart = 6;
-						zLoopEnd = 9;
+						//array 2
+						xLoopStart = 6;
+						xLoopEnd = 9;
 						break;
 				}
 				break;
-			default:
-				xLoopStart = 6;
-				xLoopEnd = 9;
-				switch (_z)
+			case < 9:
+				yLoopStart = 6;
+				yLoopEnd = 9;
+				switch (x)
 				{
 					case < 3:
-						//array 7
-						zLoopStart = 0;
-						zLoopEnd = 3;
+						//array 0
+						xLoopStart = 0;
+						xLoopEnd = 3;
 						break;
 					case < 6:
-						//array 8
-						zLoopStart = 3;
-						zLoopEnd = 6;
+						//array 1
+						xLoopStart = 3;
+						xLoopEnd = 6;
 						break;
 					default:
-						//array 9
-						zLoopStart = 6;
-						zLoopEnd = 9;
+						//array 2
+						xLoopStart = 6;
+						xLoopEnd = 9;
 						break;
 				}
 				break;
@@ -270,11 +271,13 @@ public class SudokuLogic
 		CellComponenet cellComponent;
 		CellData cellData;
 
-		for (int i = xLoopStart; i < xLoopEnd; i++)
+		for (int _y = yLoopStart; _y < yLoopEnd; _y++)
 		{
-			for (int j = zLoopStart; j < zLoopEnd; j++)
+			for (int _x = xLoopStart; _x < xLoopEnd; _x++)
 			{
-				cellGameObject = gridData.CellDictionary[i * 10 + j];
+				int index = _y * 10 + _x;
+				Debug.Log("index: " + index);
+				cellGameObject = gridData.CellDictionary[index];
 				cellComponent = cellGameObject.GetComponent<CellComponenet>();
 				cellData = cellComponent.GetCellData();
 				if (cellData.GetValue() != _value)
