@@ -33,6 +33,18 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			sudokuLogic.Solve();
+		}
+	}
+
+	public void DebugLogic()
+	{
 		CellData startingCell = gridData.GetCellDataFromGameObject(gridData.CellDictionary[88]);
 
 		Debug.Log("startingCell: " + startingCell.GetValue());
@@ -50,13 +62,5 @@ public class GameManager : MonoBehaviour
 
 		bool localArrayLogic = sudokuLogic.LocalArrayLogic(startingCell, 99);
 		Debug.Log("localArrayLogic: " + localArrayLogic);
-	}
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-
-		}
 	}
 }

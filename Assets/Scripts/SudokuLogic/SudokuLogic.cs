@@ -276,13 +276,12 @@ public class SudokuLogic
 			for (int _x = xLoopStart; _x < xLoopEnd; _x++)
 			{
 				int index = _y * 10 + _x;
-				Debug.Log("index: " + index);
 				cellGameObject = gridData.CellDictionary[index];
 				cellComponent = cellGameObject.GetComponent<CellComponenet>();
 				cellData = cellComponent.GetCellData();
 				if (cellData.GetValue() != _value)
 				{
-					cellComponent.SetColor(Color.red);
+					//cellComponent.SetColor(Color.red);
 					continue;
 				}
 				else
@@ -316,40 +315,37 @@ public class SudokuLogic
 		/*
         '''Solves the Sudoku board via the backtracking algorithm'''
         */
-
-		/*
 		List<int> _choises = new List<int>(optionList);
+		CellComponenet cellComponenet = gridData.FindEmptyCell();
 
-
-		
-		GridObjectSO emptyGridObject = FindEmpty();
-		if (emptyGridObject == null)
+		if (cellComponenet == null)
 		{
 			return true;
 		}
+		CellData cellData = cellComponenet.GetCellData();
 
 		while (_choises.Count != 0)
 		{
 			int _index = random.Next(_choises.Count);
 			int _value = _choises[_index];
-			if (IsValidMove(emptyGridObject, _value))
+			if (IsValidMove(cellData, _value))
 			{
-				emptyGridObject.cellValue = _value;
+				cellData.SetValue(_value);
 				_choises.Remove(_value);
-				SetTextField(emptyGridObject, _value, Color.white);
+				cellComponenet.SetCellData(cellData);
+				cellComponenet.SetColor(Color.white);
 				//backtracking here, leave the cell emptyGridObject empty for now if solve is false. 
 				if (Solve())
 				{
 					return true;
 				}
+				cellData.SetValue(0);
+				cellComponenet.SetCellData(cellData);
+				cellComponenet.SetColor(Color.white);
 
-				emptyGridObject.cellValue = 0;
-				SetTextField(emptyGridObject, 0, Color.white);
 			}
 			_choises.Remove(_value);
 		}
 		return false;
-		*/
-		return true;
 	}
 }

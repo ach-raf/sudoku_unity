@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour
 			{
 				position = new Vector2(startingPosition.x + x, startingPosition.y - y);
 				cellIndex = y * 10 + x;
-				cellData = new CellData(position, cellIndex, false, Color.white, cellIndex);
+				cellData = new CellData(position, 0, true, Color.white, cellIndex);
 				cellData.x = x;
 				cellData.y = y;
 				cell = Instantiate(cellPrefab, cellData.position, Quaternion.identity);

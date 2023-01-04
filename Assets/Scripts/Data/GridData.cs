@@ -168,6 +168,19 @@ public class GridData
 		return null;
 	}
 
+	public CellComponenet FindEmptyCell()
+	{
+		foreach (int index in indexSet)
+		{
+			CellComponenet cellComponenet = GetCellComponent(index);
+			if (cellComponenet && cellComponenet.GetCellData().GetValue() == 0 && cellComponenet.GetCellData().modifiable)
+			{
+				return cellComponenet;
+			}
+		}
+		return null;
+	}
+
 
 
 }
