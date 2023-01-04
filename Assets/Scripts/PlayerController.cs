@@ -12,9 +12,6 @@ public class PlayerController : MonoBehaviour
 	public RaycastHit mouseHit;
 	public Vector2 cursorPosition = new Vector2();
 
-	// for some reason the object is clicked 2 times, so I added a flag
-	private bool clicked = false;
-
 	private void Awake()
 	{
 		playerControls = new PlayerControls();
@@ -40,16 +37,11 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }*/
-		if (context.performed == true && !clicked)
+		if (context.performed)
 		{
-			clicked = true;
+
 			ClickedObject2D()?.click();
 		}
-		if (context.performed == true && clicked)
-		{
-			clicked = false;
-		}
-
 
 
 	}

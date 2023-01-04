@@ -6,12 +6,20 @@ using TMPro;
 public class CellComponenet : MonoBehaviour, IClickable
 {
 
-	// get text componenet from children
 	private TextMeshPro text;
-	private int cellNumber = 1;
+	private CellData cellData;
 	private void Awake()
 	{
 		text = GetComponentInChildren<TextMeshPro>();
+	}
+
+	private void OnEnable()
+	{
+	}
+
+	private void OnDisable()
+	{
+
 	}
 
 	// Start is called before the first frame update
@@ -28,14 +36,13 @@ public class CellComponenet : MonoBehaviour, IClickable
 
 	public void click()
 	{
-		Debug.Log("Clicked");
-		RandomColor();
-		if (cellNumber > 9)
+		Debug.Log("Debug: Clicked");
+		if (cellData.modifiable)
 		{
-			cellNumber = 1;
+			RandomColor();
+			IncrementCell();
 		}
-		SetCellNumber(cellNumber);
-		cellNumber++;
+
 
 	}
 
@@ -44,9 +51,35 @@ public class CellComponenet : MonoBehaviour, IClickable
 		GetComponent<SpriteRenderer>().color = new Color(Random.value, Random.value, Random.value);
 	}
 
-	public void SetCellNumber(int number)
+	public void OnCellDataChanged()
 	{
-		cellNumber = number;
-		text.text = cellNumber.ToString();
+		text.text = cellData.GetValue().ToString();
+		GetComponent<SpriteRenderer>().color = cellData.color;
 	}
+
+	public void SetCellData(CellData cellData)
+	{
+		this.cellData = cellData;
+		OnCellDataChanged();
+	}
+	public CellData GetCellData()
+	{
+		return cellData;
+	}
+
+	public void IncrementCell()
+	{
+		if (cellData.GetValue() > 9)
+		{
+			cellData.SetValue(1);
+		}
+		cellData.SetValue(cellData.GetValue() + 1);
+	}
+
+	public void SetColor(Color color)
+	{
+		GetComponent<SpriteRenderer>().color = color;
+	}
+
+
 }
