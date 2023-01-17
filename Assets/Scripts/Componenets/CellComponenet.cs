@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[System.Serializable]
+
 public class CellComponenet : MonoBehaviour, IClickable
 {
 
@@ -63,7 +65,7 @@ public class CellComponenet : MonoBehaviour, IClickable
 
 	public void OnCellDataChanged()
 	{
-		text.text = cellData.GetValue().ToString();
+		text.text = cellData.value.ToString();
 		GetComponent<SpriteRenderer>().color = cellData.color;
 	}
 
@@ -79,10 +81,10 @@ public class CellComponenet : MonoBehaviour, IClickable
 
 	public void IncrementCell()
 	{
-		cellData.SetValue(cellData.GetValue() + 1);
-		if (cellData.GetValue() > 9)
+		cellData.value += 1;
+		if (cellData.value > 9)
 		{
-			cellData.SetValue(1);
+			cellData.value = 1;
 		}
 		cellData.modifiable = false;
 		OnCellDataChanged();

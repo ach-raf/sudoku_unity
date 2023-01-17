@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 	{
 		CellData startingCell = gridData.GetCellDataFromGameObject(gridData.CellDictionary[88]);
 
-		Debug.Log("startingCell: " + startingCell.GetValue());
+		Debug.Log("startingCell: " + startingCell.value);
 		bool northLogic = sudokuLogic.NorthLogic(startingCell, 4);
 		Debug.Log("northLogic: " + northLogic);
 

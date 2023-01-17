@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class CellData
 {
 	public Vector2 position;
-	private int value;
+	public int value;
 	public bool modifiable;
 	public Color color;
 
@@ -26,14 +27,10 @@ public class CellData
 		this.cellSize = cellSize;
 	}
 
-	public void SetValue(int value)
-	{
-		this.value = value;
-	}
 
-	public int GetValue()
+	public override string ToString()
 	{
-		return value;
+		return JsonUtility.ToJson(this);
 	}
 }
 

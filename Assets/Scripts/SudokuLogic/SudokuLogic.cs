@@ -40,7 +40,7 @@ public class SudokuLogic
 		_nextCell = neighbor;
 		while (_nextCell != null)
 		{
-			if (_nextCell.GetValue() != _value)
+			if (_nextCell.value != _value)
 			{
 				_currentCell = _nextCell;
 				neighbor = gridData.NorthNeighbor(_currentCell);
@@ -82,7 +82,7 @@ public class SudokuLogic
 		_nextCell = neighbor;
 		while (_nextCell != null)
 		{
-			if (_nextCell.GetValue() != _value)
+			if (_nextCell.value != _value)
 			{
 				_currentCell = _nextCell;
 				neighbor = gridData.SouthNeighbor(_currentCell);
@@ -124,7 +124,7 @@ public class SudokuLogic
 		_nextCell = neighbor;
 		while (_nextCell != null)
 		{
-			if (_nextCell.GetValue() != _value)
+			if (_nextCell.value != _value)
 			{
 				_currentCell = _nextCell;
 				neighbor = gridData.EastNeighbor(_currentCell);
@@ -166,7 +166,7 @@ public class SudokuLogic
 		_nextCell = neighbor;
 		while (_nextCell != null)
 		{
-			if (_nextCell.GetValue() != _value)
+			if (_nextCell.value != _value)
 			{
 				_currentCell = _nextCell;
 				neighbor = gridData.WestNeighbor(_currentCell);
@@ -280,7 +280,7 @@ public class SudokuLogic
 				cellGameObject = gridData.CellDictionary[index];
 				cellComponent = cellGameObject.GetComponent<CellComponenet>();
 				cellData = cellComponent.GetCellData();
-				if (cellData.GetValue() != _value)
+				if (cellData.value != _value)
 				{
 					//cellComponent.SetColor(Color.red);
 					continue;
@@ -332,11 +332,11 @@ public class SudokuLogic
 			int _value = _choises[_index];
 			if (IsValidMove(cellData, _value))
 			{
-				cellData.SetValue(_value);
+				cellData.value = _value;
 				_choises.Remove(_value);
 				cellComponenet.SetCellData(cellData);
 				//cellComponenet.SetColor(Color.white);
-				if (_backtrackingLimit > 2000)
+				if (_backtrackingLimit > 10000)
 				{
 					return false;
 				}
@@ -345,7 +345,7 @@ public class SudokuLogic
 				{
 					return true;
 				}
-				cellData.SetValue(0);
+				cellData.value = 0;
 				cellComponenet.SetCellData(cellData);
 				//cellComponenet.SetColor(Color.white);
 

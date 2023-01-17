@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class GridData
 {
-	private int width = 9;
-	private int height = 9;
+	private int width;
+	private int height;
 	private HashSet<int> indexSet;
 	private Dictionary<int, GameObject> cellDictionary;
 
@@ -55,6 +56,10 @@ public class GridData
 
 	public void AddIndex(int index)
 	{
+		if (indexSet.Contains(index))
+		{
+			return;
+		}
 		indexSet.Add(index);
 		EventManager.OngridDataChanged(this);
 	}
@@ -66,9 +71,6 @@ public class GridData
 		{
 			return width;
 		}
-	}
-	public int SetWidth
-	{
 		set
 		{
 			width = value;
@@ -76,16 +78,13 @@ public class GridData
 		}
 	}
 
+
 	public int Height
 	{
 		get
 		{
 			return height;
 		}
-	}
-
-	public int SetHeight
-	{
 		set
 		{
 			height = value;
@@ -93,9 +92,10 @@ public class GridData
 		}
 	}
 
+
 	#endregion
 
-	public GridData(int width, int height)
+	public GridData(int width = 9, int height = 9)
 	{
 		this.width = width;
 		this.height = height;
@@ -173,7 +173,7 @@ public class GridData
 		foreach (int index in indexSet)
 		{
 			CellComponenet cellComponenet = GetCellComponent(index);
-			if (cellComponenet && cellComponenet.GetCellData().GetValue() == 0 && cellComponenet.GetCellData().modifiable)
+			if (cellComponenet && cellComponenet.GetCellData().value == 0 && cellComponenet.GetCellData().modifiable)
 			{
 				return cellComponenet;
 			}

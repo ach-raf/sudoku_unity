@@ -2,26 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IDataPersistence
 {
 
 	public GameObject cellPrefab;
 	public GameObject parent;
-
-	public int width = 9;
-	public int height = 9;
-
 	private GridData gridData;
-
 	public Vector2 startingPosition = new Vector2(-4.5f, 7.5f);
 
 	private void Awake()
 	{
-		gridData = new GridData(width, height);
+		gridData = new GridData(9, 9);
 	}
 	void Start()
 	{
-		CreateGrid();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.S))
+		{
+			Debug.Log("Saving");
+		}
+	}
+
+
+
+	public void LoadGrid()
+	{
+		Debug.Log("Loading");
 	}
 
 	void CreateGrid()
@@ -32,9 +41,9 @@ public class GridManager : MonoBehaviour
 		Vector2 position;
 		GameObject cell;
 		CellComponenet cellComponenet;
-		for (int y = 0; y < width; y++)
+		for (int y = 0; y < gridData.Width; y++)
 		{
-			for (int x = 0; x < height; x++)
+			for (int x = 0; x < gridData.Height; x++)
 			{
 				position = new Vector2(startingPosition.x + x, startingPosition.y - y);
 				cellIndex = y * 10 + x;
@@ -54,6 +63,7 @@ public class GridManager : MonoBehaviour
 		EventManager.OngridDataChanged(gridData);
 
 	}
+
 
 	public Color SelectColor(CellData _startingCell)
 	{
@@ -122,4 +132,46 @@ public class GridManager : MonoBehaviour
 		}
 		return color;
 	}
+
+	void IDataPersistence.LoadData(GameData data)
+	{
+		gridData.Width = data.width;
+		gridData.Height = data.height;
+		gridData.IndexSet = data.indexSet;
+
+		if (data.NewGame)
+		{
+			CreateGrid();
+		}
+		else
+		{
+			foreach (CellData cellData in data.cellDataList)
+			{
+				GameObject cell = Instantiate(cellPrefab, cellData.position, Quaternion.identity);
+				CellComponenet cellComponenet = cell.GetComponent<CellComponenet>();
+				cellComponenet.SetCellData(cellData);
+				cell.transform.SetParent(parent.transform);
+				cell.name = "Cell_" + cellData.x + "_" + cellData.y;
+				//gridData.AddIndex(cellData.cellIndex);
+				gridData.AddPair(cellData.cellIndex, cell);
+			}
+		}
+
+	}
+
+	void IDataPersistence.SaveData(GameData data)
+	{
+		data.width = gridData.Width;
+		data.height = gridData.Height;
+		data.indexSet = gridData.IndexSet;
+		data.NewGame = false;
+		CellData cellData;
+		data.cellDataList.Clear();
+		foreach (KeyValuePair<int, GameObject> pair in gridData.CellDictionary)
+		{
+			cellData = pair.Value.GetComponent<CellComponenet>().GetCellData();
+			data.cellDataList.Add(cellData);
+		}
+	}
+
 }

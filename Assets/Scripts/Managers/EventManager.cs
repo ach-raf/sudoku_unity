@@ -18,5 +18,11 @@ public static class EventManager
 	public static event Action solve;
 	public static void OnSolve() => solve?.Invoke();
 
+	public static event Action newGame;
+	public static void OnNewGame() => newGame?.Invoke();
+
+	public static event Action continueGame;
+	public static void OnContinueGame() => continueGame?.Invoke();
+
 
 }
