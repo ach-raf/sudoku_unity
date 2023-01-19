@@ -100,4 +100,11 @@ public class FileDataHandler
 		}
 		return modifiedData;
 	}
+
+	public bool CheckSaveExists()
+	{
+		// use Path.Combine to account for different OS's having different path separators
+		string fullPath = Path.Combine(dataDirPath, dataFileName);
+		return File.Exists(fullPath);
+	}
 }

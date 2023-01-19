@@ -38,6 +38,8 @@ public class DataPersistenceManager : MonoBehaviour
 	public void NewGame()
 	{
 		gameData = new GameData();
+		GetComponentInChildren<GameState>().gameStateSO.showContinueButton = false;
+
 	}
 
 	public void LoadGame()
@@ -67,6 +69,8 @@ public class DataPersistenceManager : MonoBehaviour
 		}
 
 		dataHandler.Save(gameData);
+		GetComponentInChildren<GameState>().gameStateSO.showContinueButton = true;
+
 	}
 
 	private void OnApplicationQuit()

@@ -24,5 +24,8 @@ public static class EventManager
 	public static event Action continueGame;
 	public static void OnContinueGame() => continueGame?.Invoke();
 
+	public static event Action saveFileExists;
+	public static void OnSaveFileExists() => saveFileExists?.Invoke();
+
 
 }
